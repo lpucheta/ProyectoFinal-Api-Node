@@ -1,22 +1,26 @@
 import express from 'express';
 import cors from 'cors';
 
+import productsRouter from './src/routers/products.router.js';
+
+
 const app = express();
 
-// Middleware
+// Middleware (bodyparser pero nativo de express y cors)
 app.use(express.json());
 app.use(cors());
 
-
+// Ruta general para verificar que el servidor está funcionando
 app.get('/', (req, res) => {
     res.json({ message: 'Servidor funcionando' });
 });
 
+
 // Prefijos para las rutas
+app.use('/api/products', productsRouter);
 
 
-
-
+// Ruta no encontrada
 app.use((req, res) => {
     res.status(404).json({
         message: 'Ruta no encontrada'
