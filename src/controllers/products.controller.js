@@ -1,7 +1,8 @@
 import {
      getAllProducts as getAllProductsModel,
      getProductById as getProductByIdModel,
-     createProduct as createProductModel
+     createProduct as createProductModel,
+     deleteProduct as deleteProductModel
     } from '../models/Products.js';
 
 
@@ -67,4 +68,30 @@ export const createProduct = async (req, res) => {
              error: "Error al crear el producto" 
             });
         }
+}
+
+
+export const deleteProduct = async (req, res) => {
+    const { id } = req.params;
+
+    try{
+        const deletedProduct = await deleteProductModel(id);
+
+        if(!deletedProduct){
+            return res.status(404).json({
+                error: `Producto con ID ${id} no encontrado`
+            });
+        }
+
+        return res.status(200).json({
+            message: `Producto con ID ${id} eliminado correctamente`,
+            data: deletedProduct
+        });
+
+    }catch(error){
+        console.error("Error al eliminar el producto:", error);
+        return res.status(500).json({
+             error: "Error al eliminar el producto" 
+            });
+    }
 }

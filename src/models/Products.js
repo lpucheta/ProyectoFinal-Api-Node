@@ -57,6 +57,29 @@ export const createProduct = async(productData)=> {
     }
 }
 
+// Eliminar Producto por ID
+export const deleteProduct = async (id) => {
 
+    try{
+        const productRef = doc(productsCollection, id);
+        const snapshot = await getDoc(productRef);
+
+        if(!snapshot.exists()){
+            return null;
+        }
+
+         const deletedProduct = {
+            id: snapshot.id,
+            ...snapshot.data()
+        }
+
+        await deleteDoc(productRef);
+        return deletedProduct;
+
+    }catch(error){
+        console.error("Error al eliminar el producto:", error);
+        throw error;
+        }
+    }
 
 
