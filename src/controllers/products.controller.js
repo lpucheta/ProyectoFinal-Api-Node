@@ -1,6 +1,7 @@
 import {
      getAllProducts as getAllProductsModel,
-     getProductById as getProductByIdModel
+     getProductById as getProductByIdModel,
+     createProduct as createProductModel
     } from '../models/Products.js';
 
 
@@ -38,4 +39,32 @@ export const getProductById = async (req, res) => {
              error: "Error al obtener el producto" 
             });
     }
+}
+
+export const createProduct = async (req, res) => {
+    const { title, description, price, stock } = req.body;
+
+    if(!title || !description || price === undefined || stock === undefined || price <= 0){
+        return res.status(400).json({
+            error: "Todos los campos son obligatorios: title, description, price, stock y el precio debe ser mayor o igual a 0"
+        });
+    }
+
+    try{
+        const newProductData = {
+            title,
+            description,
+            price,
+            stock
+        };
+
+        const newProduct = await createProductModel(newProductData);
+        return res.status(201).json(newProduct);
+
+    } catch(error){
+        console.error("Error al crear el producto:", error);
+        return res.status(500).json({
+             error: "Error al crear el producto" 
+            });
+        }
 }

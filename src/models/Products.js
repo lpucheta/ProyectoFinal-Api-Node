@@ -3,6 +3,8 @@ import { collection, getDocs, getDoc ,doc, addDoc, updateDoc, deleteDoc } from "
 
 const productsCollection = collection(db, "products");
 
+
+// Todos los productos
 export const getAllProducts = async () => {
     try{
         const snapshot = await getDocs(productsCollection);
@@ -20,6 +22,7 @@ export const getAllProducts = async () => {
 
 }
 
+// Producto por Id
 export const getProductById = async (id) => {
     try{
         const productRef = doc(productsCollection, id);
@@ -38,3 +41,22 @@ export const getProductById = async (id) => {
         throw error;
     }
 }
+
+// Crear un nuevo producto
+
+export const createProduct = async(productData)=> {
+    try{
+        const docRef = await addDoc(productsCollection, productData);
+        return { 
+            id: docRef.id,
+            ...productData 
+        };
+    }catch(error){
+        console.error("Error al crear el producto:", error);
+        throw error;
+    }
+}
+
+
+
+
