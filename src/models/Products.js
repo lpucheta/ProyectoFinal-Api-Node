@@ -15,7 +15,26 @@ export const getAllProducts = async () => {
 
     } catch(error){
         console.error("Error al obtener los productos:", error);
-        //throw error;
+        throw error;
     }
 
+}
+
+export const getProductById = async (id) => {
+    try{
+        const productRef = doc(productsCollection, id);
+        const snapshot = await getDoc(productRef);
+
+        if(!snapshot.exists()){
+            return null;
+        }
+        return {
+            id: snapshot.id,
+            ...snapshot.data()
+        }
+
+    } catch(error){
+        console.error("Error al obtener el producto:", error);
+        throw error;
+    }
 }

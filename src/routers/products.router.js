@@ -1,12 +1,12 @@
 import {Router} from 'express';
 const router = Router();
 
-import { getAllProducts } from '../controllers/products.controller.js';
+import { getAllProducts, getProductById } from '../controllers/products.controller.js';
 
 
 // Prefijo para la ruta /api/products
-//Todos los productos
 router.get('/', getAllProducts);
+router.get('/:id', getProductById);
 
 
 
