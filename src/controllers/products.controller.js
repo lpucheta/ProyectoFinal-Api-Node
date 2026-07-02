@@ -6,6 +6,7 @@ import {
     } from '../models/Products.js';
 
 
+
 export const getAllProducts = async (req, res) => {
     try{
         const productos = await getAllProductsModel();

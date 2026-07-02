@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import productsRouter from './src/routers/products.router.js';
+import authRouter from './src/routers/auth.router.js';
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 
 // Prefijos para las rutas
 app.use('/api/products', productsRouter);
+app.use('/api/auth', authRouter);
 
 
 // Ruta no encontrada
